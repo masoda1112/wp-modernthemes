@@ -24,7 +24,6 @@ const App = props => {
 
   const addEvent = e =>{
     e.preventDefault()
-    console.log(title,body)
     dispatch({
         type:'CREATE_EVENT',
         title,
@@ -33,7 +32,6 @@ const App = props => {
     setTitle('')
     setBody('')
   }
-  console.log({state})
 
   return (
     <>
@@ -47,6 +45,37 @@ const App = props => {
         </div>
       </form>
       <button onClick={addEvent}>イベントを作成する</button>
+      <div>
+        <h4>イベント一覧</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>タイトル</th>
+              <th>ボディー</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              state.map((event,index) => {
+                const handleClickDeleteButon = () =>{
+                  dispatch({type: 'DELETE_EVENT', id: event.id})
+                }
+              return (
+                <tr key={index}>
+                  <td>{event.id}</td>
+                  <td>{event.title}</td>
+                  <td>{event.body}</td>
+                  <td><button type="button" className="btn-danger" onClick={handleClickDeleteButon}>削除</button></td>
+              </tr>
+              )}
+              )
+            }
+          </tbody>
+          
+        </table>
+      </div>
       {/* <p>
         現在の{name}は{state.price}です。
       </p> */}
